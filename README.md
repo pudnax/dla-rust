@@ -17,6 +17,7 @@ fn main() {
     }
 
     model.save_csv("out.csv").unwrap();
+    
     dla::Raycaster::flat(model.index)
         .with_color([1., 1., 1.])
         .render("render.png");
@@ -29,9 +30,8 @@ fn main() {
 CSV
 
 ```bash
-# columns are: id, parent_id, x, y, z
 $ head output.csv
-head out.csv
+
 index,parent,x,y,z
 0,9101,0.6332,181.0855,0.0000
 1,9142,0.4418,182.0670,0.0000
