@@ -44,7 +44,7 @@ index,parent,x,y,z
 
 I'm using raycaster from repo: [Simple-raycast](https://github.com/ebobby/simple-raytracer). 
 
-![Example](./examples/render2.png)
-![Example](./examples/render3.png)
-![Example](./examples/result3d.png)
+![Example](./examples/flat_10.png)
+![Example](./examples/flat_10000.png)
+![Example](./examples/convex.png)
 
