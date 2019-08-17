@@ -145,7 +145,7 @@ impl Model3 {
         self.m_BoundingRadius = self
             .m_BoundingRadius
             .max(p.length() + self.m_AttractionDistance);
-        println!("{},{},{},{},{}", id, parent, p.x, p.y, p.z);
+        println!("{},{},{:.04},{:.04},{:.04}", id, parent, p.x, p.y, p.z);
     }
 
     pub fn nearest(&mut self, p: &Vec3d) -> usize {
@@ -326,11 +326,11 @@ impl Model2 {
 }
 
 fn main() {
-    let mut model = Builder::flat();
+    let mut model = Builder::convex();
 
-    model.add(Vec2d::new(0., 0.), 0);
+    model.add(Vec3d::new(0., 0.,0.), 0);
 
-    for _ in 0..100_000 {
+    for _ in 0..1000_000 {
         model.add_particle();
     }
 }
