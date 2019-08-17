@@ -42,7 +42,7 @@ index,parent,x,y,z
 
 ### Image
 
-I'm using raycaster from repo: [Simple-raycast](https://github.com/ebobby/simple-raytracer). 
+I'm using raycaster from repo: [Simple-raytraces](https://github.com/ebobby/simple-raytracer). 
 
 ![Example](./examples/flat_10.png)
 ![Example](./examples/flat_10000.png)
