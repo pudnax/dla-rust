@@ -3,6 +3,8 @@ use rand::{thread_rng, Rng};
 use std::ops::{Add, AddAssign, Div, Mul, Neg, Sub};
 use std::{cmp, fmt};
 
+use crate::structures::vec2d::Vec2d;
+
 // extern crate cgmath;
 
 pub fn lerp(a: Vec3d, b: Vec3d, d: f64) -> Vec3d {
@@ -306,6 +308,20 @@ impl<T: Scalar, U: Scalar, Y: Scalar> From<(T, U, Y)> for Vec3d {
 impl<T: Scalar> From<[T; 3]> for Vec3d {
     fn from(other: [T; 3]) -> Vec3d {
         Vec3d::new(other[0], other[1], other[2])
+    }
+}
+
+impl From<Vec2d> for Vec3d {
+    fn from(other: Vec2d) -> Vec3d {
+        Vec3d::new(other.x, other.y, 0.)
+    }
+}
+
+use crate::raytracer::vector::Vec3;
+
+impl From<Vec3> for Vec3d {
+    fn from(other: Vec3) -> Vec3d {
+        Vec3d::new(other.x, other.y, other.z)
     }
 }
 
