@@ -14,7 +14,8 @@ const DEFAULT_STICKINESS: f64 = 1.;
 pub mod structures;
 use structures::{vec2d, vec3d, IndexValue2d, IndexValue3d, Vec2d, Vec3d};
 
-mod raytracer;
+pub mod raytracer;
+pub use raytracer::render::Raycaster;
 
 // Particle_spacing defines the distance between particles that are
 // joined together
@@ -125,7 +126,7 @@ impl ConvexAggregation {
         vec3d::random_in_unit_sphere()
     }
 
-    pub fn add(&mut self, p: Vec3d, parent: usize) {
+    pub fn add(&mut self, p: Vec3d, _parent: usize) {
         let id = self.points.len();
         self.index.insert(IndexValue3d { vec: p, index: id });
         self.points.push(p);
@@ -203,11 +204,11 @@ impl ConvexAggregation {
         Ok(())
     }
 
-    pub fn render(&self, name: &str) {
-        println!("Rendering");
+    // pub fn render(&self, name: &str) {
+    //     println!("Rendering");
 
-        raytracer::render::render(self.index.iter().map(|x| x.vec).collect(), name);
-    }
+    //     raytracer::render::render(self.index.iter().map(|x| x.vec).collect(), name);
+    // }
 }
 
 #[derive(Default)]
@@ -283,7 +284,7 @@ impl FlatAggregation {
         vec2d::random_in_unit_sphere()
     }
 
-    pub fn add(&mut self, p: Vec2d, parent: usize) {
+    pub fn add(&mut self, p: Vec2d, _parent: usize) {
         let id = self.points.len();
         self.index.insert(IndexValue2d { vec: p, index: id });
         self.points.push(p);
@@ -361,11 +362,11 @@ impl FlatAggregation {
         Ok(())
     }
 
-    pub fn render(&self, name: &str) {
-        println!("Rendering");
-        raytracer::render::render(
-            self.index.iter().map(|x| Vec3d::from(x.vec)).collect(),
-            name,
-        );
-    }
+    // pub fn render(&self, name: &str) {
+    //     println!("Rendering");
+    //     raytracer::render::render(
+    //         self.index.iter().map(|x| Vec3d::from(x.vec)).collect(),
+    //         name,
+    //     );
+    // }
 }

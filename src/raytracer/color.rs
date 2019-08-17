@@ -82,3 +82,9 @@ impl Mul for Color {
         }
     }
 }
+
+impl From<[f64; 3]> for Color {
+    fn from(other: [f64; 3]) -> Color {
+        Color::new(other[0], other[1], other[2])
+    }
+}

@@ -10,9 +10,42 @@ use crate::raytracer::scene::Scene;
 use crate::raytracer::vector::Vec3;
 use crate::structures::vec3d::Vec3d;
 
+extern crate rstar;
+use rstar::RTree;
+
 use std::time::Instant;
 
-pub fn render(vec: Vec<Vec3d>, name: &str) {
+pub struct Raycaster {
+    color: Color,
+    points: Vec<Vec3d>,
+}
+
+impl Raycaster {
+    pub fn flat(vec: RTree<crate::structures::IndexValue2d>) -> Raycaster {
+        Raycaster {
+            color: Color::white(),
+            points: vec.iter().map(|x| Vec3d::from(x.vec)).collect(),
+        }
+    }
+    pub fn convex(vec: RTree<crate::structures::IndexValue3d>) -> Raycaster {
+        Raycaster {
+            color: Color::white(),
+            points: vec.iter().map(|x| x.vec).collect(),
+        }
+    }
+    pub fn with_color(self, col: [f64; 3]) -> Raycaster {
+        Raycaster {
+            color: col.into(),
+            points: self.points,
+        }
+    }
+    pub fn render(&self, name: &str) {
+        render(&self.points, name, self.color)
+    }
+}
+
+pub fn render(vec: &[Vec3d], name: &str, col: Color) {
+    println!("Rendering");
     let radius = vec.iter().fold(std::f64::EPSILON, |a, &b| {
         a.max((b.x * b.x + b.y * b.y + b.z * b.z).sqrt())
     });
@@ -38,10 +71,10 @@ pub fn render(vec: Vec<Vec3d>, name: &str) {
     > = Vec::new();
     for coord in vec {
         plane.push(Box::new(Sphere {
-            position: coord.into(),
+            position: Vec3::new(coord.x, coord.y, coord.z),
             radius: 0.5,
             material: Material {
-                color: Color::white(),
+                color: col,
                 diffuse: 0.6,
                 specular: 50.0,
                 specular_exponent: 100.0,

@@ -123,3 +123,9 @@ impl From<Vec3d> for Vec3 {
         Vec3::new(other.x, other.y, other.z)
     }
 }
+
+impl From<[f64; 3]> for Vec3 {
+    fn from(other: [f64; 3]) -> Vec3 {
+        Vec3::new(other[0], other[1], other[2])
+    }
+}

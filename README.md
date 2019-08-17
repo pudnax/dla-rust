@@ -1,42 +1,50 @@
 # dla-rust
 
-<p>
- <img src=./pics/cardioid.png width="200" height="200">
- <img src=./pics/cardioid_3.png width="200" height="200">
- <img src=./pics/polar_perlin.gif width="200" height="200">
-</p>
- <img src=./pics/pi_collide_4.gif width="500" height="200">
+Algorithm taken from [Michael Fogelman's dlaf.](https://github.com/fogleman/dlaf)
 
-# Graphics Archive https://disdeal.github.io/
+### Usage
 
+```Rust
+use dla::Builder;
 
-### Compiled files are located in "html" folder and can viewed on [site.](https://disdeal.github.io/)
+fn main() {
+    let mut model = Builder::flat();
 
-#### You can compile source files from "src" folder.
+    model.add([0., 0.].into(), 1);
 
-* Golang files
+    for _ in 0..10000 {
+        model.add_particle();
+    }
 
-```bash
-gopherjs build -m main.go -o main.js
+    model.save_csv("out.csv").unwrap();
+    dla::Raycaster::flat(model.index)
+        .with_color([1., 1., 1.])
+        .render("render.png");
+}
+
 ```
 
-Dependencies: [PGoJS](https://github.com/bregydoc/PGoJs)
+### Output Formats
 
-* Rust files
-
-```bash
-cargo build --release
-```
+CSV
 
 ```bash
-cargo web build --release
+# columns are: id, parent_id, x, y, z
+$ head output.csv
+head out.csv
+index,parent,x,y,z
+0,9101,0.6332,181.0855,0.0000
+1,9142,0.4418,182.0670,0.0000
+2,9386,0.1673,183.9447,0.0000
+3,9172,-0.0078,182.9602,0.0000
+4,9199,-0.9820,183.1860,0.0000
 ```
-If you want to test your application locally, use `cargo web start` and open browser to the port it provides.
 
-```bash
-cargo web deploy
-```
-Dependencies: [quicksilver](https://github.com/ryanisaacg/quicksilver), [cargo-web
-](https://github.com/koute/cargo-web), 
+### Image
 
+I'm using raycaster from repo: [Simple-raycast](https://github.com/ebobby/simple-raytracer). 
+
+![Example](./examples/render2.png)
+![Example](./examples/render3.png)
+![Example](./examples/result3d.png)
 
