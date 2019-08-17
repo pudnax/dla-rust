@@ -101,4 +101,6 @@ pub fn render(vec: Vec<Vec3d>, name: &str) {
         "{} milliseconds elapsed.",
         duration.as_secs() * 1000 + u64::from(duration.subsec_millis())
     );
+
+    // println!("{}:{}:{}", duration.);
 }

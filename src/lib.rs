@@ -1,4 +1,3 @@
-extern crate csv;
 extern crate rand;
 extern crate rstar;
 
