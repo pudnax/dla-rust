@@ -11,3 +11,6 @@ rand = "0.7.0"
 rstar = "0.5.0"
 image = "0.22.1"
 
+[profile.release]
+opt-level = 3
+codegen-units = 16
