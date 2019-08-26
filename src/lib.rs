@@ -12,7 +12,7 @@ const DEFAULT_STUBBORNNESS: usize = 0;
 const DEFAULT_STICKINESS: f64 = 1.;
 
 pub mod structures;
-use structures::{vec2d, vec3d, IndexValue2d, IndexValue3d, Vec2d, Vec3d};
+pub use structures::{vec2d, vec3d, IndexValue2d, IndexValue3d, Vec2d, Vec3d};
 
 pub mod raytracer;
 pub use raytracer::render::Raycaster;

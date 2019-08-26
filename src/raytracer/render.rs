@@ -16,7 +16,7 @@ use rstar::RTree;
 use std::time::Instant;
 
 pub struct Raycaster {
-    color: Color,
+    color: fn(f64) -> [f64; 3],
     points: Vec<Vec3d>,
     width: u32,
     height: u32,
@@ -25,7 +25,7 @@ pub struct Raycaster {
 impl Raycaster {
     pub fn flat(vec: RTree<crate::structures::IndexValue2d>) -> Raycaster {
         Raycaster {
-            color: Color::white(),
+            color: |_x| [1., 1., 1.],
             points: vec.iter().map(|x| Vec3d::from(x.vec)).collect(),
             width: 1920,
             height: 1080,
@@ -33,15 +33,16 @@ impl Raycaster {
     }
     pub fn convex(vec: RTree<crate::structures::IndexValue3d>) -> Raycaster {
         Raycaster {
-            color: Color::white(),
+            color: |_x| [1., 1., 1.],
             points: vec.iter().map(|x| x.vec).collect(),
             width: 1920,
             height: 1080,
         }
     }
-    pub fn with_color(self, col: [f64; 3]) -> Raycaster {
+
+    pub fn with_color(self, col: fn(f64) -> [f64; 3]) -> Raycaster {
         Raycaster {
-            color: col.into(),
+            color: col,
             points: self.points,
             ..self
         }
@@ -60,7 +61,7 @@ impl Raycaster {
     }
 }
 
-pub fn render(vec: &[Vec3d], name: &str, col: Color, width: u32, height: u32) {
+pub fn render(vec: &[Vec3d], name: &str, col: impl Fn(f64) -> [f64; 3], width: u32, height: u32) {
     println!("Rendering");
     let radius = vec.iter().fold(std::f64::EPSILON, |a, &b| {
         a.max((b.x * b.x + b.y * b.y + b.z * b.z).sqrt())
@@ -88,7 +89,7 @@ pub fn render(vec: &[Vec3d], name: &str, col: Color, width: u32, height: u32) {
             position: Vec3::new(coord.x, coord.y, coord.z),
             radius: 0.5,
             material: Material {
-                color: col,
+                color: col(coord.length() / radius).into(),
                 diffuse: 0.6,
                 specular: 50.0,
                 specular_exponent: 100.0,
