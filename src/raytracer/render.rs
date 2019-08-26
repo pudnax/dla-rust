@@ -8,7 +8,7 @@ use crate::raytracer::material::Material;
 use crate::raytracer::options::Options;
 use crate::raytracer::scene::Scene;
 use crate::raytracer::vector::Vec3;
-use crate::structures::vec3d::Vec3d;
+use crate::structures::vec3d::{lerp, Vec3d};
 
 extern crate rstar;
 use rstar::RTree;
@@ -18,6 +18,8 @@ use std::time::Instant;
 pub struct Raycaster {
     color: Color,
     points: Vec<Vec3d>,
+    width: u32,
+    height: u32,
 }
 
 impl Raycaster {
@@ -25,26 +27,40 @@ impl Raycaster {
         Raycaster {
             color: Color::white(),
             points: vec.iter().map(|x| Vec3d::from(x.vec)).collect(),
+            width: 1920,
+            height: 1080,
         }
     }
     pub fn convex(vec: RTree<crate::structures::IndexValue3d>) -> Raycaster {
         Raycaster {
             color: Color::white(),
             points: vec.iter().map(|x| x.vec).collect(),
+            width: 1920,
+            height: 1080,
         }
     }
     pub fn with_color(self, col: [f64; 3]) -> Raycaster {
         Raycaster {
             color: col.into(),
             points: self.points,
+            ..self
         }
     }
+
+    pub fn w_h(self, width: u32, height: u32) -> Raycaster {
+        Raycaster {
+            width,
+            height,
+            ..self
+        }
+    }
+
     pub fn render(&self, name: &str) {
-        render(&self.points, name, self.color)
+        render(&self.points, name, self.color, self.width, self.height)
     }
 }
 
-pub fn render(vec: &[Vec3d], name: &str, col: Color) {
+pub fn render(vec: &[Vec3d], name: &str, col: Color, width: u32, height: u32) {
     println!("Rendering");
     let radius = vec.iter().fold(std::f64::EPSILON, |a, &b| {
         a.max((b.x * b.x + b.y * b.y + b.z * b.z).sqrt())
@@ -62,8 +78,6 @@ pub fn render(vec: &[Vec3d], name: &str, col: Color) {
     let fov = 90f64;
     let offset = (radius + 5.) / (fov * std::f64::consts::PI / 180. / 2.).tan();
 
-    let width = 1920;
-    let height = 1080;
     let aspect_ratio = f64::from(width) / f64::from(height);
 
     let mut plane: std::vec::Vec<

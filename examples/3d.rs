@@ -5,12 +5,12 @@ fn main() {
 
     model.add([0., 0., 0.].into(), 1);
 
-    for _ in 0..1000 {
+    for _ in 0..100000 {
         model.add_particle();
     }
 
     model.save_csv("out.csv").unwrap();
     dla::Raycaster::convex(model.index)
-        .with_color([1., 1., 1.])
-        .render("render.png");
+        .with_color([0., 1., 0.])
+        .render("render2.png");
 }
