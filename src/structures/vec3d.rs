@@ -95,8 +95,6 @@ impl Vec3d {
         (dx * dx + dy * dy + dz * dz).sqrt()
     }
 
-    /// Generates a random Vec3d across a uniform distribution using the answer found in
-    /// http://stackoverflow.com/questions/5408276/python-uniform-spherical-distribution
     pub fn random() -> Vec3d {
         let mut rng = thread_rng();
         let phi: f64 = rng.gen_range(0.0, 2.0 * ::std::f64::consts::PI);

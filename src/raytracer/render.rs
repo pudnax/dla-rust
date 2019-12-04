@@ -8,7 +8,7 @@ use crate::raytracer::material::Material;
 use crate::raytracer::options::Options;
 use crate::raytracer::scene::Scene;
 use crate::raytracer::vector::Vec3;
-use crate::structures::vec3d::{lerp, Vec3d};
+use crate::structures::vec3d::Vec3d;
 
 extern crate rstar;
 use rstar::RTree;

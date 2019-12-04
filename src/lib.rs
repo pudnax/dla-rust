@@ -103,7 +103,7 @@ impl ConvexAggregation {
 
     pub fn random_starting_position(&self) -> Vec3d {
         let d = self.bounding_radius;
-        vec3d::random_in_unit_sphere().normalized() * d
+        vec3d::Vec3d::random().normalized() * d
     }
 
     fn should_reset(&self, p: Vec3d) -> bool {
@@ -123,7 +123,7 @@ impl ConvexAggregation {
     }
 
     fn motion_vector(&self) -> Vec3d {
-        vec3d::random_in_unit_sphere()
+        vec3d::Vec3d::random()
     }
 
     pub fn add(&mut self, p: Vec3d, _parent: usize) {
