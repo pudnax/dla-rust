@@ -11,20 +11,6 @@ pub fn lerp(a: Vec3d, b: Vec3d, d: f64) -> Vec3d {
     a + (b - a).normalized() * d
 }
 
-pub fn random_in_unit_sphere() -> Vec3d {
-    let mut rng = rand::thread_rng();
-    loop {
-        let p = Vec3d::new(
-            rng.gen_range(-1., 1.),
-            rng.gen_range(-1., 1.),
-            rng.gen_range(-1., 1.),
-        );
-        if p.length_squared() < 1. {
-            return p;
-        }
-    }
-}
-
 #[derive(Copy, Clone)]
 pub struct Vec3d {
     pub x: f64,
