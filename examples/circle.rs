@@ -17,6 +17,6 @@ fn main() {
 
     model.save_csv("out.csv").unwrap();
     dla::Raycaster::flat(model.index)
-        .with_color([1., 1., 1.])
+        .with_color(|_| [1., 1., 1.])
         .render("render.png");
 }
