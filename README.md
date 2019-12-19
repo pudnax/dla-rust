@@ -1,7 +1,7 @@
 # dla-rust
+[![Build Status](https://travis-ci.com/disDeal/dla-rust.svg?branch=master)](https://travis-ci.com/disDeal/dla-rust)
 
 Algorithm taken from [Michael Fogelman's dlaf.](https://github.com/fogleman/dlaf)
-
 ### Usage
 
 ```Rust
